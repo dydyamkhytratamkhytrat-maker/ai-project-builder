@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Project Builder</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #080b12;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 20px;
+      border-bottom: 1px solid #202838;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+      color: #5ee7c5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 50px 20px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 45px;
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #5ee7c5, #6c8cff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #aab3c5;
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .builder {
+      background: #111722;
+      border: 1px solid #252e40;
+      border-radius: 20px;
+      padding: 25px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.35);
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      resize: vertical;
+      background: #080b12;
+      color: white;
+      border: 1px solid #303a50;
+      border-radius: 15px;
+      padding: 18px;
+      font-size: 17px;
+      outline: none;
+      line-height: 1.7;
+    }
+
+    textarea:focus {
+      border-color: #5ee7c5;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    select {
+      width: 100%;
+      background: #080b12;
+      color: white;
+      border: 1px solid #303a50;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #5ee7c5, #6c8cff);
+      color: #061016;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+    }
+
+    .result {
+      display: none;
+      margin-top: 25px;
+      background: #080b12;
+      border: 1px solid #252e40;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .result h2 {
+      color: #5ee7c5;
+      margin-bottom: 15px;
+    }
+
+    .loading {
+      display: none;
+      margin-top: 20px;
+      text-align: center;
+      color: #aab3c5;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 35px;
+    }
+
+    .card {
+      background: #111722;
+      border: 1px solid #252e40;
+      border-radius: 18px;
+      padding: 25px;
+    }
+
+    .icon {
+      font-size: 30px;
+      margin-bottom: 15px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: #9ca7bb;
+      line-height: 1.7;
+    }
+
+    footer {
+      text-align: center;
+      color: #707b90;
+      padding: 40px 20px;
+    }
+
+    @media (max-width: 700px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .options,
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">🤖 AI Project Builder</div>
+  <div>منصة بناء المشاريع بالذكاء الاصطناعي</div>
+</header>
+
+<div class="container">
+
+  <section class="hero">
+    <h1>أنشئ مشروعك بالذكاء الاصطناعي</h1>
+
+    <p>
+      اكتب فكرة التطبيق أو الموقع الذي تريده،
+      ودع الذكاء الاصطناعي يساعدك في بناء المشروع.
+    </p>
+  </section>
+
+  <section class="builder">
+
+    <textarea id="prompt"
+      placeholder="اكتب هنا ما تريد إنشاءه...
+
+مثال:
+أريد إنشاء تطبيق متجر إلكتروني لبيع الملابس، يحتوي على تسجيل دخول، منتجات، سلة شراء، ودفع إلكتروني."></textarea>
+
+    <div class="options">
+
+      <select id="type">
+        <option value="website">موقع ويب</option>
+        <option value="webapp">تطبيق ويب</option>
+        <option value="mobile">تطبيق هاتف</option>
+      </select>
+
+      <select id="language">
+        <option value="arabic">العربية</option>
+        <option value="english">English</option>
+      </select>
+
+      <select id="level">
+        <option value="simple">مشروع بسيط</option>
+        <option value="advanced">مشروع متقدم</option>
+        <option value="professional">مشروع احترافي</option>
+      </select>
+
+    </div>
+
+    <button id="buildButton" onclick="buildProject()">
+      🚀 إنشاء المشروع
+    </button>
+
+    <div class="loading" id="loading">
+      ⏳ جاري تحليل فكرتك وتجهيز المشروع...
+    </div>
+
+    <div class="result" id="result">
+      <h2>✅ تم تحليل طلبك</h2>
+      <p id="resultText"></p>
+    </div>
+
+  </section>
+
+  <section class="features">
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>ذكاء اصطناعي</h3>
+      <p>
+        يفهم وصف المشروع الذي تكتبه باللغة الطبيعية
+        ويساعدك على تحويل الفكرة إلى مشروع.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">⚡</div>
+      <h3>سرعة في البناء</h3>
+      <p>
+        ابدأ مشروعك بسرعة بدلًا من كتابة كل شيء
+        من الصفر.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="icon">💻</div>
+      <h3>مشاريع متعددة</h3>
+      <p>
+        يمكنك إنشاء مواقع وتطبيقات ومشاريع مختلفة
+        من خلال وصف فكرتك.
+      </p>
+    </div>
+
+  </section>
+
+</div>
+
+<footer>
+  © 2026 AI Project Builder
+</footer>
+
+<script>
+
+function buildProject() {
+
+  const prompt = document.getElementById("prompt").value.trim();
+  const type = document.getElementById("type").value;
+  const language = document.getElementById("language").value;
+  const level = document.getElementById("level").value;
+
+  const button = document.getElementById("buildButton");
+  const loading = document.getElementById("loading");
+  const result = document.getElementById("result");
+  const resultText = document.getElementById("resultText");
+
+  if (!prompt) {
+    alert("اكتب فكرة المشروع أولاً.");
+    return;
+  }
+
+  button.disabled = true;
+  loading.style.display = "block";
+  result.style.display = "none";
+
+  setTimeout(function() {
+
+    loading.style.display = "none";
+    result.style.display = "block";
+    button.disabled = false;
+
+    resultText.innerHTML =
+      "فكرة المشروع التي أدخلتها:<br><br>" +
+      "<strong>" + escapeHtml(prompt) + "</strong><br><br>" +
+      "نوع المشروع: " + type + "<br>" +
+      "اللغة: " + language + "<br>" +
+      "مستوى المشروع: " + level +
+      "<br><br>" +
+      "الواجهة جاهزة. الخطوة التالية هي ربط المنصة بنموذج ذكاء اصطناعي حقيقي حتى يتم إنشاء ملفات المشروع والكود تلقائيًا.";
+
+  }, 2000);
+}
+
+function escapeHtml(text) {
+  return text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+</script>
+
+</body>
+</html>
